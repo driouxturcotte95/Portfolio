@@ -1,0 +1,134 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap');
+
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    background-color: #24252A;
+}
+
+body{
+    position: relative;
+    margin: 0% 20%;
+    text-align: center;
+    color: #edf0f1;
+}
+
+li, a, button, h2, p{
+    font-family: "Montserrat", sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    color: #edf0f1;
+    text-decoration: none;
+}
+
+h2{
+    font-size: 22px;
+    text-decoration: underline;
+    color: #537bf5;
+    font-weight: bold;
+}
+
+header{
+    display: flex;
+    margin: 0;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 30px 0;
+}
+
+.logo{
+    cursor: pointer;
+    width: 110px;
+    margin-right: auto;
+}
+
+.nav_links{
+    list-style: none;
+}
+
+.nav_links li{
+    display: inline-block;
+    padding: 0px 20px;
+}
+
+.nav_links li a{
+    transition: all 0.3s ease 0s;
+}
+
+.nav_links li a:hover{
+    color: #1E48C2;
+}
+
+button{
+    background-color: rgba(30, 72, 194, 1);
+    padding: 9px 25px;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease 0s;
+    margin-left: 20px;
+}
+
+
+
+button:hover{
+    background-color: rgba(30, 72, 194, 0.7);
+}
+
+.profile{
+    display: flex;
+}
+
+.profile img{
+    width: 350px;
+    border-radius: 30px;
+    margin-left: 30px;
+}
+
+.about-me{
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+
+.about-me p{
+    margin: 10px 0;
+}
+
+.project{
+    text-align: left;
+}
+
+.project-list{
+    margin-top: 10px;
+    padding-left: 15px;
+}
+
+.project-list li{
+    margin-top: 5px;
+}
+
+.skills{
+    margin-top: 25px;
+    text-align: left;
+}
+
+.coding-icon{
+    display: flex;
+    margin-top: 15px;
+    column-gap: 15px;
+    flex-wrap: wrap;
+
+}
+.coding-icon i {
+    font-size: 40px;
+}
+footer{
+    margin-top: 200px;
+}
+
+.heart{
+    color: red;
+    font-weight: bold;
+}
