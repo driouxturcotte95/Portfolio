@@ -4,7 +4,7 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    background-color: #24252A;
+
 }
 
 body{
@@ -12,6 +12,7 @@ body{
     margin: 0% 20%;
     text-align: center;
     color: #edf0f1;
+    background-color: #24252A;
 }
 
 li, a, button, h2, p{
@@ -57,33 +58,63 @@ header{
 }
 
 .nav_links li a:hover{
-    color: #1E48C2;
+    color: #1E48C2 !important;
 }
 
-button{
+.cta button{
     background-color: rgba(30, 72, 194, 1);
     padding: 9px 25px;
     border: none;
     border-radius: 50px;
     cursor: pointer;
-    transition: all 0.3s ease 0s;
-    margin-left: 20px;
+    transition: all 0.3s ease 0s !important;
+    margin-left: 15px;
 }
 
-
-
-button:hover{
+.cta button:hover{
     background-color: rgba(30, 72, 194, 0.7);
 }
 
+#darkModeBtn{
+    background-color: transparent;
+    border: none;
+    padding-left: 15px;
+    cursor: pointer;
+}
+
+#darkModeBtn img:hover{
+    animation: shake 0.5s;
+    animation-iteration-count: 1;
+}
+@keyframes shake {
+    10%, 90% {
+        transform: translate3d(-1px, 0, 0);
+    }
+    20%, 80% {
+        transform: translate3d(2px, 0, 0);
+    }
+
+    30%, 50%, 70% {
+        transform: translate3d(-2px, 0, 0);
+    }
+    40%, 60% {
+        transform: translate3d(2px, 0, 0);
+    }
+}
 .profile{
     display: flex;
 }
 
 .profile img{
-    width: 350px;
+    width: 100%;
+    max-width: 1100px;
     border-radius: 30px;
     margin-left: 30px;
+    height: auto;
+    cursor: pointer;
+}
+.profile-photo{
+    margin-right: 2.5%;
 }
 
 .about-me{
@@ -125,10 +156,78 @@ button:hover{
     font-size: 40px;
 }
 footer{
-    margin-top: 200px;
+    margin-top: 180px;
+    padding-bottom: 20px;
 }
 
 .heart{
     color: red;
     font-weight: bold;
+}
+
+@media only screen and (max-width: 1060px){
+    .nav_links li{
+        display: inline-block;
+        padding: 0px 5px;
+    }
+}
+
+@media only screen and (max-width: 900px){
+    header{
+        display: block;
+    }
+
+
+    header:nth-child(1){
+
+        display: block;
+    }
+
+    .nav_links li{
+        display: block;
+        padding: 10px 5px;
+
+    }
+    .nav_links li a{
+        font-size: 20px;
+    }
+
+    .cta button {
+        margin: 5px 0px 0px 0px;
+        font-size: 18px;
+    }
+
+    .cta{
+        display: block;
+    }
+
+    #darkModeBtn{
+        background-color: transparent;
+        border: none;
+        padding-left: 0px;
+        padding-top: 15px;
+    }
+
+    .logo{
+        width: 125px;
+        margin-right: auto;
+    }
+
+    #white-mode img{
+        padding: 10px 0px 0px 0px;
+        margin: 0;
+    }
+
+
+    .profile{
+    display: block;
+    }
+
+    .profile-photo{
+        width: 80%;
+    }
+
+    footer{
+        margin-top: 100px;
+    }
 }

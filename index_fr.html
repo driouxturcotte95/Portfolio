@@ -21,9 +21,9 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css">
 </head>
-<body>
+<body id="body">
     <header>
-        <img src="./assets/logo.png" alt="logo" class="logo">
+        <img src="./assets/logo.png" alt="logo" class="logo" id="logoImg">
         <nav>
             <ul class="nav_links">
                 <li><a href="index_en.html">EN</a></li>
@@ -32,21 +32,22 @@
                 <li><a href="#">About</a></li>
             </ul>
         </nav>
-        <a href="#" class="cta"><button>Contact</button></a>
+            <a href="#" class="cta"><button>Contact</button></a>
+            <button id="darkModeBtn"><img src="./assets/sun.png" alt="darkModeButton" id="darkModeImg"></button>
     </header>
     <main>
         <!--ABOUT ME-->
         <section class="profile">
             <div class="about-me">
                 <h2>À propos de moi</h2>
-                <p>Bonjour, Je m'appelle Dérek, programmeur résidant à Trois-Rivières.</p>
-                <p>J'ai fait un DEP en soutien informatique à l'école CFP des Riverains à Repentigny.</p>
-                <p>Je travaille en tant que chargé de projets pour la compagnie Diffusion Solutions Intégrées. J'ai eu la chance d'apprendre à programmer par moi-même avec la plateforme Codecademy et l'aide de programmeurs chez Diffusion Solutions Intégrées.</p>
-                <p>Dans mes temps libres, j'aime faire du sport comme le volleyball, badminton, hockey. Je suis aussi un amateur de jeux de société et de jeux vidéos.</p>
-                <p>Fait amusant, Je suis le seul qui saute assez haut pour toucher le plafond avec ma tête au bureau!</p>
+                    <p>Bonjour, Je m'appelle Dérek, programmeur résidant à Trois-Rivières.</p>
+                    <p>J'ai fait un DEP en soutien informatique à l'école CFP des Riverains à Repentigny.</p>
+                    <p>Je travaille en tant que chargé de projets pour la compagnie Diffusion Solutions Intégrées. J'ai eu la chance d'apprendre à programmer par moi-même avec la plateforme Codecademy et l'aide de programmeurs chez Diffusion Solutions Intégrées.</p>
+                    <p>Dans mes temps libres, j'aime faire du sport comme le volleyball, badminton, hockey. Je suis aussi un amateur de jeux de société et de jeux vidéos.</p>
+                    <p>Fait amusant, Je suis le seul qui saute assez haut pour toucher le plafond avec ma tête au bureau!</p>
             </div>
             <div class="profile-photo">
-                <img src="assets/derek_image.png" alt="derek's photo">
+                <img src="assets/derek-image.png" alt="derek's photo">
             </div>
         </section>
 
@@ -82,8 +83,9 @@
         </section>
         <!--FOOTER-->
         <footer>
-            <p>Fait avec amoure <span class="heart">♥</span> au Québec</p>
+            <p>Fait avec <span class="heart">♥</span> au Québec</p>
         </footer>
     </main>
+    <script src="script.js"></script>
 </body>
 </html>
