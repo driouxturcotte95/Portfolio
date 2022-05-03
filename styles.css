@@ -4,7 +4,7 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-
+    transition: all 1s ease 0s;
 }
 
 body{
@@ -27,13 +27,13 @@ body{
 li, a, button, h2, p{
     font-family: "Montserrat", sans-serif;
     font-weight: 500;
-    font-size: 16px;
+    font-size: 18px;
     color: #edf0f1;
     text-decoration: none;
 }
 
 h2{
-    font-size: 22px;
+    font-size: 24px;
     text-decoration: underline;
     color: #537bf5;
     font-weight: bold;
@@ -133,7 +133,7 @@ header{
 }
 
 .about-me p{
-    margin: 10px 0;
+    margin: 10px 0px;
 }
 
 .project{
@@ -176,6 +176,23 @@ header{
     font-weight: bold;
 }
 
+@media only screen and (min-width: 2000px){
+    h2, p{
+        font-size: 1.5rem;
+    }
+
+    h2{
+        font-size: 1.75rem;
+    }
+
+    a{
+        font-size: 1.25rem;
+    }
+
+    section{
+        padding-top: 20px;
+    }
+}
 @media only screen and (max-width: 1060px){
     .nav_links li{
         display: inline-block;
@@ -187,7 +204,6 @@ header{
     header{
         display: block;
     }
-
 
     header:nth-child(1){
 
@@ -229,7 +245,6 @@ header{
         margin: 0;
     }
 
-
     .profile{
     display: block;
     }
@@ -238,4 +253,7 @@ header{
         width: 80%;
     }
 
+    #footer{
+        padding-top: 25px;
+    }
 }

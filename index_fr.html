@@ -1,99 +1,784 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta content="IE=edge" http-equiv="X-UA-Compatible">
-        <meta content="width=device-width, initial-scale=1.0" name="viewport">
-        <link href="styles.css" rel="stylesheet">
-        <title>DRT intro</title>
-        <link href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css" rel="stylesheet">
-        <link href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css" rel="stylesheet">
-        <link href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css" rel="stylesheet">
-        <link href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css" rel="stylesheet">
-        <link href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css" rel="stylesheet">
-        <link href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css" rel="stylesheet">
-        <link href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css" rel="stylesheet">
-        <link href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css" rel="stylesheet">
-        <link href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css" rel="stylesheet">
-        <link href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css" rel="stylesheet">
-        <link href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css" rel="stylesheet">
-        <link href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css" rel="stylesheet">
-        <link href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css" rel="stylesheet">
-        <link href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css" rel="stylesheet">
-    </head>
-    <body id="body">
-        <div id="page-container">
-            <header>
-                <img alt="logo" class="logo" id="logoImg" src="./assets/logo.png">
-                <nav>
-                    <ul class="nav_links">
-                        <li><a href="index_en.html">EN</a></li>
-                        <li><a href="#">Services</a></li>
-                        <li><a href="#">Projects</a></li>
-                        <li><a href="#">About</a></li>
-                    </ul>
-                </nav>
-                <a class="cta" href="#">
-                    <button>Contact</button>
-                </a>
-                <button id="darkModeBtn"><img alt="darkModeButton" id="darkModeImg" src="./assets/sun.png"></button>
-            </header>
-            <div id="content-wrap">
-                <!--ABOUT ME-->
-                <section class="profile">
-                    <div class="about-me">
-                        <h2>À propos de moi</h2>
-                        <p>Bonjour, Je m'appelle Dérek, programmeur résidant à Trois-Rivières.</p>
-                        <p>J'ai fait un DEP en soutien informatique à l'école CFP des Riverains à Repentigny.</p>
-                        <p>Je travaille en tant que chargé de projets pour la compagnie Diffusion Solutions Intégrées. J'ai eu
-                            la chance d'apprendre à programmer par moi-même avec la plateforme Codecademy et l'aide de
-                            programmeurs chez Diffusion Solutions Intégrées.</p>
-                        <p>Dans mes temps libres, j'aime faire du sport comme le volleyball, badminton, hockey. Je suis aussi un
-                            amateur de jeux de société et de jeux vidéos.</p>
-                        <p>Fait amusant, Je suis le seul qui saute assez haut pour toucher le plafond avec ma tête au
-                            bureau!</p>
-                    </div>
-                    <div class="profile-photo">
-                        <img alt="derek's photo" src="assets/derek-image.png">
-                    </div>
-                </section>
+${params.format == 'pdf' ? '<?xml version="1.0" encoding="UTF-8"?>' : '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">'}
+<%
+//noinspection GrUnresolvedAccess
+def tx = tx as cc.diffusion.progression.api.model.TX
+//noinspection GrUnresolvedAccess
+def pluginService = pluginService as cc.diffusion.progression.api.service.PluginService
+//noinspection GrUnresolvedAccess
+def session = session as cc.diffusion.progression.api.model.UserSession
+def locale = tx.lang ? new java.util.Locale(tx.lang, 'CA') : tx.client?.lang ? new java.util.Locale(tx.client.lang, 'CA') : pluginService.getLocaleFromUserSession(session)
+def lang = locale.language
+def dh = new cc.diffusion.util.DataHelper(pluginService, session, params.format)
 
-                <!--PROJECT-->
-                <section class="project">
-                    <h2>Projets</h2>
-                    <ul class="project-list">
-                        <li><a href="#">Rice Krispies (Créateur de ticket pour hubspot)</a></li>
-                        <li><a href="#">Place holder for a project link</a></li>
-                        <li><a href="#">Place holder for a project link</a></li>
-                    </ul>
-                </section>
+def variables = binding.variables.containsKey('variables') ? variables : [:]
+def altCieProp = variables.alt_logo_prop ?: 'autre_logo.choix_logo.id'
+def showCieName = variables.show_cie_name != 'false'
+def viewAsRole = variables.view_as_role ?: 'pdf'
+def showHR = variables.show_hr != 'false'
+def showGeneratedAt = variables.show_generated_at != 'false'
+def showGeneratedBy = variables.show_generated_by != 'false'
+def showStateDate = variables.show_state_date != 'false'
+def showEndStateDate = variables.show_endState_date != 'false'
+def showParent = variables.show_parent != 'false'
+def showRDV = variables.show_rdv != 'false'
+def showClient = variables.show_client != 'false'
+def showClientPhone = variables.show_client_phone != 'false'
+def showClientEmail = variables.show_client_email != 'false'
+def showNode = variables.show_node != 'false'
+def showNodePhone = variables.show_node_phone != 'false'
+def showNodeEmail = variables.show_node_email != 'false'
+def showEmptyNode = variables.show_empty_node != 'false'
+def showContacts = variables.show_contacts != 'false'
+def showSummary = variables.show_summary != 'false'
+def showDescription = variables.show_description != 'false'
+def showNotes = variables.show_notes != 'false'
+def showPropGroups = variables.show_prop_groups != 'false'
+def showLineColorProps = variables.show_line_color_props != 'false'
+def showResources = variables.show_resources != 'false'
+def showLineColorResources = variables.show_line_color_resources != 'false'
+def showAssistant = variables.show_assistant != 'false'
+def showTimeEntries = variables.show_time_entries != 'false'
+def showTimeEntriesTotalDuration = variables.show_time_entries_total_duration != 'false'
+def showLineColorTimeEntries = variables.show_line_color_time_entries!= 'false'
+def showInvoiceAtProgressNumber = variables.show_invoice_at_progress_number?.trim()
+def showItems = variables.show_items != 'false'
+def showItemsPrice = variables.show_items_price != 'false'
+def showItemsQty = variables.show_items_qty != 'false'
+def showItemsConfirmedQty = variables.show_items_confirmed_qty != 'false'
+def showItemsDescription = variables.show_items_description != 'false'
+def showItemsName = variables.show_items_name != 'false'
+def showItemsCode = variables.show_items_code != 'false'
+def itemsListRowOrder = variables.items_list_row_order?.toUpperCase()
+// pour itemsListRowOrder ---> si pas précisé on met lordre par défaut ...  'Qty,ConfirmedQty,Name,Description,Code,Price,Rebate'
+// (la colonne total n'est pas configurable on la laisse en dernier à droite pour fitter avec les taxes et le sous/grand total)
+def showLineColorItems = variables.show_line_color_items!= 'false'
+def showSignatureHR = variables.show_signature_hr != 'false'
+def showSignatureTX = variables.show_signature_tx != 'false'
+def showImages = variables.show_images != 'false'
+def showTermConditions = variables.show_terms_and_conditions != 'false'
 
-                <!--SKILLS-->
-                <section class="skills">
-                    <h2>Compétences</h2>
-                    <div class="coding-icon">
-                        <i class="devicon-html5-plain"></i>
-                        <i class="devicon-css3-plain"></i>
-                        <i class="devicon-javascript-plain"></i>
-                        <i class="devicon-vuejs-plain"></i>
-                        <i class="devicon-react-original"></i>
-                        <i class="devicon-git-plain"></i>
-                        <i class="devicon-bitbucket-original"></i>
-                        <i class="devicon-github-original"></i>
-                        <i class="devicon-mysql-plain"></i>
-                        <i class="devicon-nodejs-plain"></i>
-                        <i class="devicon-npm-original-wordmark"></i>
-                        <i class="devicon-php-plain"></i>
-                        <i class="devicon-vscode-plain"></i>
-                        <i class="devicon-intellij-plain"></i>
-                    </div>
-                </section>
-            </div>
-            <!--FOOTER-->
-            <footer id="footer">
-                <p>Fait avec <span class="heart">♥</span> au Québec</p>
-            </footer>
+def hasPaymentModule = session.cie.hasModule("payment") as Boolean
+
+if (tx.type?.isDynamicProperty("info.show_itemprice")) {
+showItemsPrice = "true".equalsIgnoreCase(tx.getDynamicProperty("info.show_itemprice"))
+}
+
+def showAsInvoice = org.apache.commons.validator.GenericValidator.isInt(showInvoiceAtProgressNumber) && tx.currentState.step.logicId >= Integer.parseInt(showInvoiceAtProgressNumber)
+if (showAsInvoice) {
+showItemsPrice = true
+}
+
+def hasPermissionVisibility = { permissions, visibility ->
+return null != permissions?.find { it.role.name == viewAsRole && it.visibility >= visibility }
+}
+
+def logoFileData = session.cie.logo
+def logoFileDataEntityName = 'FileData'
+def cieAddress = session.cie.config.address?.value
+if (tx.getDynamicProperty(altCieProp)?.isLong()) {
+def altCie = pluginService.getEntity('DynamicEntity', tx.getDynamicProperty(altCieProp).toLong())
+if (altCie) {
+def altCieLogo = altCie?.attachments?.find()
+if (altCieLogo) {
+logoFileData = altCieLogo
+logoFileDataEntityName = 'DynamicEntityAttachment'
+}
+cieAddress = altCie.getDynamicProperty('adresse.adresse_complete') ?: cieAddress
+}
+}
+
+def labels = [
+'invoiceLabel':              ['fr': 'Facture',              'en': 'Invoice'],
+'tx.code':                   ['fr': 'Code',                 'en': 'Code'],
+'tx.state':                  ['fr': 'État',                 'en': 'Status'],
+'tx.endState':               ['fr': 'Terminé le',           'en': 'Completed on'],
+'tx.rv':                     ['fr': 'Rendez-vous',          'en': 'Appointment'],
+'tx.summary':                ['fr': 'Sommaire',             'en': 'Summary'],
+'tx.description':            ['fr': 'Description',          'en': 'Description'],
+'tx.items':                  ['fr': 'Items',                'en': 'Items'],
+'tx.signature':              ['fr': 'Signature',            'en': 'Signature'],
+'tx.timesheet':              ['fr': 'Feuille de temps',     'en': 'Timesheet'],
+'tx.resource':               ['fr': 'Ressource humaine',    'en': 'Human resource'],
+'client':                    ['fr': 'Client',               'en': 'Client'],
+'node':                      ['fr': 'Emplacement',          'en': 'Location'],
+'generatedOn':               ['fr': 'Généré le',            'en': 'Generated on'],
+'generatedBy':               ['fr': 'par',                  'en': 'by'],
+'parent':                    ['fr': 'Tâche principale: ',   'en': 'Main task: '],
+'resources':                 ['fr': 'Équipement',           'en': 'Equipment'],
+'attachments':               ['fr': 'Pièces jointes',       'en': 'Attachments'],
+'item.name':                 ['fr': 'Nom',                  'en': 'Name'],
+'item.code':                 ['fr': 'Code',                 'en': 'Code'],
+'item.description':          ['fr': 'Description',          'en': 'Description'],
+'item.quantity':             ['fr': 'Quantité',             'en': 'Quantity'],
+'item.confirmedQty':         ['fr': 'Qté Confirmée',        'en': 'Confirmed Qty'],
+'item.price':                ['fr': 'Prix',                 'en': 'Prix'],
+'item.rebate':               ['fr': 'Rabais %',             'en': 'Rebate %'],
+'item.total':                ['fr': 'Total',                'en': 'Total'],
+'item.subTotal':             ['fr': 'Sous-total',           'en': 'Subtotal'],
+'termAndCondition':          ['fr': 'Termes et conditions', 'en': 'Terms and conditions'],
+'termsAcceptation':          ['fr': "En signant ce document, vous reconnaissez que les informations qui s'y trouvent sont exactes.",
+'en': 'By signing this document, you acknowledge that the information is accurate.']
+]
+
+%>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    ${session.cie.config.tx_print_and_report_css?.value ?: ''}
+</head>
+
+<body>
+<div class="header">
+    <div class="row">
+        <div class="col-1-3 screen-left mobile-center">
+            ${pluginService.getFileDataImage(logoFileData, params.format, logoFileDataEntityName, 'height="110"', session.uid)}
         </div>
-    <script src="script.js"></script>
-    </body>
+
+        <div class="col-1-3 center mobile-hidden" style="padding:0 5px 0 15px; width:30%">
+            <% if (showCieName) {  %>
+            <h5> ${dh.f(session.cie.description)} </h5>
+            <% } %>
+            ${dh.f(cieAddress?:'<br/>')}
+        </div>
+
+        <div class="col-1-3 screen-right mobile-center">
+            <table class="document header brand-header-top-right">
+                <thead>
+                <tr>
+                    <th colspan="2" style="width: 100%;" class="center">
+                        <% if (showAsInvoice) { %>
+                        ${labels['invoiceLabel'][lang]} ${tx.externalInvoiceNumber? ": " + dh.f(tx.externalInvoiceNumber) : ''}
+                        <% } else { %>
+                        ${dh.getLabelFromSet(tx.type.labels)}
+                        <% } %>
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td width="40%"></td>
+                    <td width="60%"></td>
+                </tr>
+                <% if (!showAsInvoice || (showAsInvoice && !tx.externalInvoiceNumber)) { %>
+                <tr>
+                    <td> ${labels['tx.code'][lang]}:</td>
+                    <td> ${dh.f(tx.code)} </td>
+                </tr>
+                <% } %>
+
+                <% if (showParent && tx.parentTx) { %>
+                <tr>
+                    <td> ${labels['parent'][lang]} </td>
+                    <td> ${dh.f(tx.parentTx?.code)} </td>
+                </tr>
+                <% } %>
+
+                <% if (tx.getDynamicProperty('info.po')) { %>
+                <tr>
+                    <td>${dh.f(pluginService.getPropertyLabel(tx.type.baseType, 'info.po', lang))}: </td>
+                    <td>${dh.f(tx.getDynamicProperty('info.po'))} </td>
+                </tr>
+                <% } %>
+
+                <% if (showStateDate) { %>
+                <tr>
+                    <td>${labels['tx.state'][lang]}: </td>
+                    <td>
+                        ${dh.getLabelFromSet(tx.currentState.step.statusLabels)}<br/>
+                        ${dh.formatDate(tx.currentState.datetime)}
+                    </td>
+                </tr>
+                <% } %>
+
+                <% if (showHR && tx.resource) { %>
+                <tr>
+                    <td>${dh.getLabelFromSet(tx.resource.type.labels)}: </td>
+                    <td>${dh.f(tx.resource.label)} </td>
+                </tr>
+                <% } %>
+
+                <% if (showAssistant) { %>
+                <% tx.helpers?.each { it -> %>
+                <tr>
+                    <td></td>
+                    <td>${dh.f(it.label)} </td>
+                </tr>
+                <% } %>
+                <% } %>
+
+                <% if (showGeneratedAt) { %>
+                <tr>
+                    <td>${labels['generatedOn'][lang]}: </td>
+                    <td>${dh.formatDateTime(new java.util.Date())} </td>
+                </tr>
+                <% } %>
+
+                <% if (showGeneratedBy && session.user?.humanResource?.label) { %>
+                <tr>
+                    <td>${labels['generatedBy'][lang]}: </td>
+                    <td>${session.user.humanResource.label}</td>
+                </tr>
+                <% } %>
+
+                <% if (showRDV && tx.rv) { %>
+                <tr>
+                    <td>${labels['tx.rv'][lang]}: </td>
+                    <td>${dh.formatDateTime(tx.rv)} </td>
+                </tr>
+                <% } %>
+
+                <% if (showEndStateDate && tx.endState && tx.currentState.step.logicId >= 600) { %>
+                <tr>
+                    <td>${labels['tx.endState'][lang]}: </td>
+                    <td>${dh.formatDateTime(tx.endState.datetime)} </td>
+                </tr>
+                <% } %>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<% if (params.format == 'pdf') { %>
+<div class="header-left">
+    ${dh.f(session.cie.description)}
+</div>
+
+<div class="header-center">
+    ${showAsInvoice? labels['invoiceLabel'][lang] : dh.getLabelFromSet(tx.type.labels)}
+</div>
+
+<div class="header-right">
+    ${showAsInvoice && tx.externalInvoiceNumber? dh.f(tx.externalInvoiceNumber) : dh.f(tx.code)}
+</div>
+
+<div class="footer-left">
+    ${dh.f(session.cie.description)}
+</div>
+
+<div class="footer-center">
+    ${dh.msg('report.powered.by')}
+</div>
+
+<div class="footer-right">
+    ${dh.msg('report.label.page')} <span class="pagenumber"></span> ${dh.msg('report.label.of')} <span
+        class="pagecount"></span>
+</div>
+<% } %>
+
+<div class="row avoid-page-break">
+    <% if (tx.client && showClient) { %>
+    <div class="col-1-2">
+        <div class="padded">
+            <div class="margin-horizontal">
+                <h2 class="brand-primary margin-vertical">
+                    ${labels['client'][lang]}
+                </h2>
+                <% if (tx.client) { %>
+                <b>${dh.f(tx.client.label)}</b><br/>
+                <% } %>
+                <% if (tx.clientAddress) { %>
+                ${dh.formatAddress(tx.clientAddress)}
+                <% if (showClientPhone && tx.clientAddress.phone) { %>
+                ${dh.f(tx.clientAddress.phone)}<br/>
+                <% } %>
+                <% if (showClientEmail && tx.clientAddress.email) { %>
+                ${dh.f(tx.clientAddress.email)}<br/>
+                <% } %>
+                <% } %>
+                <% if (showContacts && tx.client?.primaryContact) { %>
+                <hr style="width:60%; margin-left: 0"/>
+                <b>${dh.f(tx.client.primaryContact.label)} ${tx.client.primaryContact.function ? '(' + dh.f(tx.client.primaryContact.function) + ')' : ''}</b><br/>
+                <% if (tx.client.primaryContact.cell) { %>
+                ${dh.f(tx.client.primaryContact.cell)}<br/>
+                <% } %>
+                <% if (tx.client.primaryContact.address?.email) { %>
+                ${dh.f(tx.client.primaryContact.address.email)}<br/>
+                <% } %>
+                <% } %>
+            </div>
+        </div>
+    </div>
+    <% } %>
+    <% if (showNode && (tx.node || showEmptyNode)) { %>
+    <div class="col-1-2">
+        <div class="padded">
+            <div class="margin-horizontal">
+                <h2 class="brand-primary margin-vertical">
+                    ${labels['node'][lang]}
+                </h2>
+                <% if (tx.node) { %>
+                <b>${dh.f(tx.node.label)}</b><br/>
+                <% } %>
+                <% if (tx.nodeAddress) { %>
+                ${dh.formatAddress(tx.nodeAddress)}
+                <% if (showNodePhone && tx.nodeAddress.phone) { %>
+                ${dh.f(tx.nodeAddress.phone)}<br/>
+                <% } %>
+                <% if (showNodeEmail && tx.nodeAddress.email) { %>
+                ${dh.f(tx.nodeAddress.email)}<br/>
+                <% } %>
+                <% } %>
+                <% if (showContacts && tx.node?.primaryContact) { %>
+                <hr style="width:60%; margin-left: 0"/>
+                <b>${dh.f(tx.node.primaryContact.label)} ${tx.node.primaryContact.function ? '(' + dh.f(tx.node.primaryContact.function) + ')' : ''}</b><br/>
+                <% if (tx.node.primaryContact.cell) { %>
+                ${dh.f(tx.node.primaryContact.cell)}<br/>
+                <% } %>
+                <% if (tx.node.primaryContact.address?.email) { %>
+                ${dh.f(tx.node.primaryContact.address.email)}<br/>
+                <% } %>
+                <% } %>
+            </div>
+        </div>
+    </div>
+    <% } %>
+</div>
+
+<% if (showSummary && tx.summary) { %>
+<div class="row avoid-page-break">
+    <div class="col-1-1">
+        <div class="padded">
+            <div class="margin-horizontal">
+                <h2 class="brand-primary margin-vertical">
+                    ${labels['tx.summary'][lang]}
+                </h2>
+                ${dh.f(tx.summary)}
+            </div>
+        </div>
+    </div>
+</div>
+<% } %>
+
+<% if (showDescription || showNotes) { %>
+<% def descriptionAndOrNotesCol = showDescription && showNotes ? '2' : '1' %>
+<div class="row avoid-page-break">
+    <% if (showDescription) { %>
+    <div class="col-1-${descriptionAndOrNotesCol}">
+        <div class="padded">
+            <div class="margin-horizontal">
+                <h2 class="brand-primary margin-vertical">
+                    ${labels['tx.description'][lang]}
+                </h2>
+                ${dh.f(tx.description)}
+            </div>
+        </div>
+    </div>
+    <% } %>
+    <% if (showNotes) { %>
+    <div class="col-1-${descriptionAndOrNotesCol}">
+        <div class="padded">
+            <div class="margin-horizontal">
+                <h2 class="brand-primary margin-vertical">
+                    ${dh.f(pluginService.getPropertyLabel(tx.type.baseType, 'info.notes', lang))}
+                </h2>
+                ${dh.f(tx.getDynamicProperty('info.notes'))}
+            </div>
+        </div>
+    </div>
+    <% } %>
+</div>
+<% } %>
+
+<% if (showPropGroups) { %>
+<% def nbCols = 2 %>
+<% tx.type.baseType.propertyGroups?.findAll({ hasPermissionVisibility(it.permissions, 1) })?.eachWithIndex { propGroup, propGroupIndex ->
+def emptyValue = false
+def props = propGroup.propertyDefinitions?.findAll({ (!('info'.equalsIgnoreCase(propGroup.name) && ['po','notes'].contains(it.name)) && hasPermissionVisibility(it.permissions, 1)) }) as List
+def nbRows = Math.ceil(props.size() / nbCols) as int
+for (def c = 0; c < nbCols; c++) {
+for (def r = 0; r < nbRows; r++) {
+def propIndex = c * nbRows + r
+if (propIndex < props.size()) {
+def prop = props.get(propIndex)
+if(pluginService.getFormattedValue(session.uid, tx, propGroup.name + '.' + prop.name, locale)){
+emptyValue = true %>
+<%}%>
+<%}%>
+<%}%>
+<%}%>
+<% def isEntityGroup = propGroup.entityName != null && tx.getDynamicProperty(propGroup.name) %>
+<% if( emptyValue || isEntityGroup){ %>
+<div class="row avoid-page-break">
+    <div class="col-1-1">
+        <div class="padded">
+            <div class="margin-horizontal">
+                <h2 class="brand-primary margin-vertical">
+                    ${dh.getLabelFromSet(propGroup.labels)} ${isEntityGroup ? '- ' + dh.getFormattedValue(tx, propGroup.name) : ''}
+                </h2>
+                <%  props = propGroup.propertyDefinitions?.findAll({ (!('info'.equalsIgnoreCase(propGroup.name) && ['po','notes'].contains(it.name)) && hasPermissionVisibility(it.permissions, 1)) }) as List %>
+                <%  nbRows = Math.ceil(props.size() / nbCols) as int %>
+                <% for (def c = 0; c < nbCols; c++) { %>
+                <div class="col-1-${nbCols}">
+                    <table class="data">
+                        <% for (def r = 0; r < nbRows; r++) { %>
+                        <% def propIndex = c * nbRows + r %>
+                        <% if (propIndex < props.size()) { %>
+                        <% def prop = props.get(propIndex) %>
+                        <%if(pluginService.getFormattedValue(session.uid, tx, propGroup.name + '.' + prop.name, locale)){%>
+                        <tr class="${r % 2 && showLineColorProps? 'brand-tertiary' : ''}">
+                            <th width="35%">${dh.getLabelFromSet(prop.labels)}:</th>
+                            <td>${dh.getFormattedValue(tx,propGroup.name + '.' + prop.name)}</td>
+                        </tr>
+                        <% } %>
+                        <% } %>
+                        <% } %>
+                    </table>
+                </div>
+                <% } %>
+            </div>
+        </div>
+    </div>
+</div>
+<% } %>
+<% } %>
+<% } %>
+
+<% if (showResources && tx.resources) { %>
+<div class="row avoid-page-break">
+    <div class="col-1-1">
+        <div class="padded">
+            <div class="margin-horizontal">
+                <h2 class="brand-primary margin-vertical">
+                    ${labels['resources'][lang]}
+                </h2>
+                <table>
+                    <thead>
+                    <tr class="brand-secondary">
+                        <th style="width: 30%" class="left">${dh.msg('common.type')}</th>
+                        <th style="width: 70%" class="left">${dh.msg('common.name')}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <% tx.resources.eachWithIndex { resource, i -> %>
+                    <tr class="${i % 2 && showLineColorResources? 'brand-tertiary' : ''}">
+                        <td style="width: 30%" class="left">
+                            ${dh.getLabelFromSet(resource.type?.labels)}
+                        </td>
+                        <td style="width: 70%" class="left">
+                            ${dh.f(resource.label)}
+                        </td>
+                    </tr>
+                    <%if(viewAsRole=="pdf" && resource.type?.propertyGroups ){
+                    List<cc.diffusion.progression.api.model.PropertyGroup> listPropertyGroup = resource.type.propertyGroups.findAll({hasPermissionVisibility(it.permissions,1)})
+                        listPropertyGroup.each { propGroup ->
+                        List<cc.diffusion.progression.api.model.PropertyDefinition> propertyDefinitionList = propGroup.getPropertyDefinitions().findAll({hasPermissionVisibility(it.permissions, 1)});
+                            propertyDefinitionList.each { propDef ->
+                            if(resource.getDynamicProperty(propGroup.name+"."+propDef.name)){
+                            if(pluginService.getFormattedValue(session.uid, resource, propGroup.name + '.' + propDef.name, locale)){%>
+                            <tr class="${i % 2 && showLineColorResources? 'brand-tertiary' : ''}">
+                                <td style="width: 30%; padding-left: 60px; padding-top: 1px;padding-bottom: 1px;">
+                                    ${dh.getLabelFromSet(propDef.labels)}:
+                                </td>
+                                <td colspan="5" style="width: 70%;   padding-top: 1px;padding-bottom: 1px;">
+                                    ${dh.getFormattedValue(resource,propGroup.name + '.' + propDef.name)}
+                                </td>
+                            </tr>
+                            <%}
+                            }
+                            }
+                            }
+                            }%>
+                            <% } %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<% } %>
+
+<% if (showTimeEntries && tx.timeEntries) { %>
+<% def totalDuration = 0 %>
+<div class="row avoid-page-break">
+    <div class="col-1-1">
+        <div class="padded">
+            <div class="margin-horizontal">
+                <h2 class="brand-primary margin-vertical">
+                    ${dh.msg('tx.timesheet')}
+                </h2>
+                <table class="data">
+                    <thead>
+                    <tr class="brand-secondary">
+                        <th class="left">${dh.msg('common.name')}</th>
+                        <th class="right">${dh.msg('report.ts.date')}</th>
+                        <th class="right mobile-hidden">${dh.msg('report.field.start')}</th>
+                        <th class="right mobile-hidden">${dh.msg('report.field.end')}</th>
+                        <th class="right">${dh.msg('report.field.duration')}</th>
+                        <th class="right">${dh.msg('activity')}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <% tx.timeEntries.eachWithIndex { timeEntry, i -> %>
+                    <% totalDuration += timeEntry?.duration ?: 0 %>
+                    <tr class="${i % 2 && showLineColorTimeEntries ? 'brand-tertiary' : ''}">
+                        <td class="left">${dh.f(timeEntry?.humanResource?.label)}</td>
+                        <td class="right">${dh.formatDate(timeEntry?.start)}</td>
+                        <td class="right mobile-hidden">${dh.formatTime(timeEntry?.start?:'')}</td>
+                        <td class="right mobile-hidden">${dh.formatTime(timeEntry?.end?:'')}</td>
+                        <td class="right">${dh.formatDuration(timeEntry?.duration)}</td>
+                        <td class="right">${dh.f(timeEntry?.activity?.labels?.find { it.lang == lang }?.value ?: timeEntry?.activity?.label)}</td>
+                    </tr>
+                    <% } %>
+                    <% if (showTimeEntriesTotalDuration) { %>
+                    <tr style='font-weight:bold;'>
+                        <td>${dh.msg('tx.total')}</td>
+                        <td colspan="3"></td>
+                        <td class="right">${dh.formatDuration(totalDuration)}</td>
+                        <td></td>
+                    </tr>
+                    <% } %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<% } %>
+
+<% if (showItems && tx.itemList?.items) { %>
+<% def showItemsRebate = tx.itemList.items.find({ it.rebate != 0 }) != null && showItemsPrice
+
+// ordre par défaut des colonnes, si on en oubli dans la liste et que leur variable show_items_XXXXX respectif est à true, on l'ajoute pour eux
+itemsListRowOrder = !org.apache.commons.validator.GenericValidator.isBlankOrNull(itemsListRowOrder)? itemsListRowOrder : 'Qty,ConfirmedQty,Name,Description,Code,Price,Rebate'
+itemsListRowOrder += (showItemsQty && !itemsListRowOrder.contains("QTY")?',QTY':'')
+itemsListRowOrder += (showItemsConfirmedQty && !itemsListRowOrder.contains("CONFIRMEDQTY")?',CONFIRMEDQTY':'')
+itemsListRowOrder += (showItemsName && !itemsListRowOrder.contains("NAME")?',NAME':'')
+itemsListRowOrder += (showItemsDescription && !itemsListRowOrder.contains("DESCRIPTION")?',DESCRIPTION':'')
+itemsListRowOrder += (showItemsCode && !itemsListRowOrder.contains("CODE")?',CODE':'')
+itemsListRowOrder += (showItemsPrice && !itemsListRowOrder.contains("PRICE")?',PRICE':'')
+itemsListRowOrder += (showItemsRebate && !itemsListRowOrder.contains("REBATE")?',REBATE':'')
+
+// *** SECTION HEADERS ROW DYNAMIQUES *** //
+def itemsTableHeadersFullHtml = ""
+def itemsListRowsHeaderHtml = [:] as Map<String, String> // Note : l'allignement est weird mais cest pour que les gars au PRO lisent mieux le code dans l'éditeur de print.
+itemsListRowsHeaderHtml['NAME'] = showItemsName?                    "<th class='left'>${labels['item.name'][lang]}</th>":''
+itemsListRowsHeaderHtml['CODE'] = showItemsCode?                    "<th style='width: 15%' class='left'>${labels['item.code'][lang]}</th>":''
+itemsListRowsHeaderHtml['DESCRIPTION'] = showItemsDescription?      "<th class='left mobile-hidden'>${labels['item.description'][lang]}</th>":''
+itemsListRowsHeaderHtml['QTY'] = showItemsQty?                      "<th style='width: 8%'  class='center'>${labels['item.quantity'][lang]}</th>":''
+itemsListRowsHeaderHtml['CONFIRMEDQTY'] = showItemsConfirmedQty?    "<th style='width: 10%' class='center'>${labels['item.confirmedQty'][lang]}</th>":''
+itemsListRowsHeaderHtml['PRICE'] = showItemsPrice?                  "<th style='width: 12%' class='right mobile-hidden'>${labels['item.price'][lang]}</th>":''
+itemsListRowsHeaderHtml['REBATE'] = showItemsRebate?                "<th style='width: 8%'  class='center mobile-hidden'>${labels['item.rebate'][lang]}</th>":''
+itemsListRowsHeaderHtml['TOTAL'] = showItemsPrice?                  "<th style='width: 12%' class='right'>${labels['item.total'][lang]}</th>":''
+def topTableColspan = itemsListRowsHeaderHtml.toString().count("<th") // je compte combien de colonnes j'ai réellement générées pour ma table au complet.
+
+def itemsListRows = itemsListRowOrder.split(',').findAll( { !"Total".equalsIgnoreCase(it)})
+itemsListRows.stream().distinct().each { rowName ->  // si on fait un typo il va rien trouvé rien ajouté et on élimine les doublons.
+itemsTableHeadersFullHtml += itemsListRowsHeaderHtml[rowName.trim()]?:''
+}
+itemsTableHeadersFullHtml += itemsListRowsHeaderHtml['TOTAL']?:''    // toujours en dernier celui là
+
+
+// *** SECTION BODY ROWS DYNAMIQUES *** //
+def itemsTableBodyFullHtml = ""
+def itemsListRowsBodyHtml = [:] as Map<String, String>
+
+tx.itemList.items.eachWithIndex { item, i ->
+itemsListRowsBodyHtml['NAME'] = showItemsName?                 "<td class='left'>${dh.f(item.label)}</td>":''
+itemsListRowsBodyHtml['CODE'] = showItemsCode?                 "<td class='left'>${dh.f(item.product?.code)}</td>":''
+itemsListRowsBodyHtml['DESCRIPTION'] = showItemsDescription?   "<td class='left mobile-hidden'>${dh.f(item.description)}</td>":''
+itemsListRowsBodyHtml['QTY'] = showItemsQty?                   "<td class='center'>${dh.formatQuantity(item.quantity)}</td>":''
+itemsListRowsBodyHtml['CONFIRMEDQTY'] = showItemsConfirmedQty? "<td class='center'>${dh.formatQuantity(item.quantityConfirmed)}</td>":''
+itemsListRowsBodyHtml['PRICE'] = showItemsPrice?               "<td class='right mobile-hidden'>${dh.formatCurrency(item.price)}</td>":''
+itemsListRowsBodyHtml['REBATE'] = showItemsRebate?             "<td class='center mobile-hidden'>${item.rebate ? dh.formatPercent(item.rebate) : ''}</td>":''
+itemsListRowsBodyHtml['TOTAL'] = showItemsPrice?               "<td class='right'>${dh.formatCurrency(item.total)}</td>":''
+
+itemsTableBodyFullHtml += "<tr class='${i % 2 && showLineColorItems? 'brand-tertiary' : ''}'>"
+itemsListRows.stream().distinct().each { rowName ->
+itemsTableBodyFullHtml += itemsListRowsBodyHtml[rowName.trim()]?:''
+}
+itemsTableBodyFullHtml += itemsListRowsBodyHtml['TOTAL']?:''
+itemsTableBodyFullHtml += "</tr>"
+
+if (viewAsRole=="pdf" && item.type?.propertyGroups) {
+List<cc.diffusion.progression.api.model.PropertyGroup> listPropertyGroup = item.type.propertyGroups.findAll({hasPermissionVisibility(it.permissions,1)})
+    listPropertyGroup.each { propGroup ->
+    List<cc.diffusion.progression.api.model.PropertyDefinition> propertyDefinitionList = propGroup.getPropertyDefinitions().findAll({hasPermissionVisibility(it.permissions,1)})
+        propertyDefinitionList.each { propDef ->
+        if(pluginService.getFormattedValue(session.uid, item, propGroup.name + '.' + propDef.name, locale)){
+        itemsTableBodyFullHtml += """
+        <tr class='${i % 2 && showLineColorItems? 'brand-tertiary' : ''}'>
+        <td colspan='${topTableColspan}' style='padding-top: 1px;padding-bottom: 1px; padding-left:25px;'>
+            <b>${dh.getLabelFromSet(propDef.labels)}: </b>${dh.getFormattedValue(item,propGroup.name + '.' + propDef.name)}
+        </td>
+        </tr>
+        """
+        }
+        }
+        }
+        }
+        }
+        %>
+        <div class="row avoid-page-break">
+            <div class="col-1-1">
+                <div class="padded">
+                    <div class="margin-horizontal">
+                        <h2 class="brand-primary margin-vertical">
+                            ${showAsInvoice || showItemsPrice ? labels['invoiceLabel'][lang] : labels['tx.items'][lang]}
+                        </h2>
+                        <table>
+                            <thead>
+                            <tr class="brand-secondary">
+                                ${itemsTableHeadersFullHtml}
+                            </tr>
+                            </thead>
+                            <tbody>
+                            ${itemsTableBodyFullHtml}
+                            </tbody>
+                        </table>
+                        <% if (showItemsPrice) { %>
+                        <table class="data">
+                            <tbody>
+                            <tr>
+                                <td class="right" width="70%"><strong>${labels['item.subTotal'][lang]}</strong></td>
+                                <td class="right" width="30%">${dh.formatCurrency(tx.itemList.subTotal)}</td>
+                            </tr>
+                            <% tx.itemList.taxTotals.eachWithIndex { taxTotal, i -> %>
+                            <tr>
+                                <td class="right">
+                                    ${dh.getLabelFromSet(taxTotal.tax.labels)}
+                                    <% if (taxTotal.tax.taxNumber) { %>
+                                    <small>(${dh.f(taxTotal.tax.taxNumber)})</small>
+                                    <% } %>
+                                </td>
+                                <td class="right">${dh.formatCurrency(taxTotal.amount)}</td>
+                            </tr>
+                            <% } %>
+                            <tr>
+                                <td class="right"><strong>${dh.msg('item.total')}</strong></td>
+                                <td class="right">${dh.formatCurrency(tx.itemList.total)}</td>
+                            </tr>
+                            <% if (hasPaymentModule && tx.itemList?.payments) { %>
+                            <tr>
+                                <td class="right"><strong>${dh.msg('itemlist.totalPayments')}</strong></td>
+                                <td class="right">${dh.formatCurrency(tx.itemList?.totalPayments ?: BigDecimal.ZERO)}</td>
+                            </tr>
+                            <tr>
+                                <td class="right"><strong>${dh.msg('item_list.balance')}</strong></td>
+                                <td class="right">${dh.formatCurrency(tx.itemList.amountDue)}</td>
+                            </tr>
+                            <% } %>
+                            </tbody>
+                        </table>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <% } %>
+
+        <% if (showSignatureHR || showSignatureTX) { %>
+        <div class="row avoid-page-break">
+            <% if (showSignatureHR) { %>
+            <div class="col-1-${showSignatureHR && showSignatureTX ? '2' : '1'}">
+                <div class="padded">
+                    <div class="margin-horizontal">
+                        <h2 class="brand-primary margin-vertical">
+                            ${labels['tx.signature'][lang]}
+                            ${tx.resource?.type?.labels ? dh.getLabelFromSet(tx.resource.type.labels) : labels['tx.resource'][lang]}
+                        </h2>
+                        <% if (tx.signatureHR) { %>
+                        <div class="center">
+                            ${pluginService.getFileDataImage(tx.signatureHR, params.format, 'TXSignature', 'height="75"', session.uid)}
+                        </div>
+                        <% } else if (tx.resource?.signatureHR) { %>
+                        <div class="center">
+                            ${pluginService.getFileDataImage(tx.resource.signatureHR, params.format, 'CieFileData', 'height="75"', session.uid)}
+                        </div>
+                        <% } %>
+                        <% if (tx.resource?.label) { %>
+                        <div class="center">
+                            ${dh.f(tx.resource.label)}
+                        </div>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+            <% } %>
+            <% if (showSignatureTX) { %>
+            <div class="col-1-${showSignatureHR && showSignatureTX ? '2' : '1'}">
+                <div class="padded">
+                    <div class="margin-horizontal">
+                        <h2 class="brand-primary margin-vertical">
+                            ${labels['tx.signature'][lang]} ${labels['client'][lang]}
+                        </h2>
+                        <% if (tx.signature) { %>
+                        <div class="center">
+                            ${pluginService.getFileDataImage(tx.signature, params.format, 'TXSignature', 'height="75"', session.uid)}
+                        </div>
+                        <% } %>
+                        <% if (tx.signatureText) { %>
+                        <div class="center">
+                            ${dh.f(tx.signatureText)}
+                        </div>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+            <% } %>
+        </div>
+        <% } %>
+
+        <% if (showTermConditions) { %>
+        <div class="row avoid-page-break">
+            <div class="col-1-1">
+                <div class="padded">
+                    <div class="margin-horizontal">
+                        <h2 class="brand-primary margin-vertical">
+                            ${labels['termAndCondition'][lang]}
+                        </h2>
+                        <% if (lang == 'fr') { %>
+                        <p style="font-size: small">
+                            En signant ce document, vous reconnaissez que les informations qui s'y trouvent sont exactes.<br/>
+                            Minimum de 4 heures en chantier.<br/>
+                            Ce bon exlus le temps de préparation au bureau.
+                        </p>
+                        <% } else if (lang == 'en') { %>
+                        <p style="font-size: small">
+                            By signing this document, you acknowledge that the information is accurate.
+                            Minimum of 4 hours on site.<br/>
+                            This work order excludes preparation time at the office.
+                        </p>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <% } %>
+
+        <% if (showImages) { %>
+        <% def images = tx.attachments?.findAll({ it.contentType.startsWith('image') })?.sort {  a, b -> a.name.toLowerCase() <=> b.name.toLowerCase() } as List %>
+        <% if (images) { %>
+        <div class="row avoid-page-break">
+            <div class="col-1-1">
+                <div class="padded">
+                    <div class="margin-horizontal">
+                        <h2 class="brand-primary margin-vertical">
+                            ${labels['attachments'][lang]}
+                        </h2>
+                        <% def nbImagePerRow = 2 %>
+                        <% def nbRows = Math.ceil(images.size() / nbImagePerRow) as int %>
+                        <% for (def r = 0; r < nbRows; r++) { %>
+                        <div class="row">
+                            <% for (def i = 0; i < nbImagePerRow; i++) { %>
+                            <% if (r * nbImagePerRow + i < images.size()) { %>
+                            <% def image = images.get(r * nbImagePerRow + i) %>
+                            <% if (image) { %>
+                            <div class="col-1-${nbImagePerRow} center">
+                                ${pluginService.getFileDataImage(image, params.format, 'TXAttachment', 'width="300"', session.uid)}<br/>
+                                ${dh.f(images.get(r * nbImagePerRow + i).getName())}
+                            </div>
+                            <% } %>
+                            <% } %>
+                            <% } %>
+                        </div>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <% } %>
+        <% } %>
+
+</body>
 </html>
