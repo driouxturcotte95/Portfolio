@@ -34,8 +34,61 @@
                     </ul>
                 </nav>
                 <a class="cta" href="#">
-                    <button>Contact</button>
+                    <button data-modal-target="#modal">Contact</button>
                 </a>
+
+                <div class="modal" id="modal">
+                    <div class="modal-header">
+                        <div class="title">Contact me</div>
+                        <button class="close-button" data-close-button>&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="contact-form">
+                            <form action="https://getform.io/f/fd01512b-6a38-4743-b861-562e9e4f3ea4" method="post">
+                                <!--PRÉNOM-->
+                                <div class="form-group">
+                                    <label class="form-label" for="fname">Name</label>
+                                    <div class="form-input-group">
+                                        <input class="form-control" id="fname" name="fname" required type="text"> <br/>
+                                    </div>
+                                </div>
+
+                                <!--NOM-->
+                                <div class="form-group">
+                                    <label class="form-label" for="lname">Last name</label>
+                                    <div class="form-input-group">
+                                        <input class="form-control" id="lname" name="lname" required type="text"> <br/>
+                                    </div>
+                                </div>
+
+                                <!--COURRIEL-->
+                                <div class="form-group">
+                                    <label class="form-label" for="email">Email</label>
+                                    <div class="form-input-group">
+                                        <input class="form-control" id="email" name="email" required type="email">
+                                    </div>
+                                </div>
+
+                                <!--MESSAGE-->
+                                <div class="form-group">
+                                    <label class="form-label" for="message">Message</label>
+                                    <div class="form-input-group">
+                                <textarea class="form-control" id="message" maxlength="3000" name="message" required
+                                          rows="6" type="textarea"> </textarea>
+                                    </div>
+                                </div>
+                                <!--SUBMIT BUTTON-->
+                                <div class="form-group">
+                                    <button class="form-btn form-btn-primary form-btn-lg form-btn-block" id="form-button"
+                                            type="submit">Send email
+                                    </button>
+
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div id="overlay"></div>
                 <button id="darkModeBtn"><img alt="darkModeButton" id="darkModeImg" src="./assets/sun.png"></button>
             </header>
             <div id="content-wrap">
